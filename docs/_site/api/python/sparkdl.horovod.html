@@ -1,0 +1,179 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>sparkdl.horovod module &#8212; pysparkdl 1.3.0 documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pysparkdl.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="_static/pysparkdl.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+    
+        <li class="nav-item nav-item-0"><a href="index.html">pysparkdl 1.3.0 documentation</a> &#187;</li>
+ 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="sparkdl-horovod-module">
+<h1>sparkdl.horovod module<a class="headerlink" href="#sparkdl-horovod-module" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-sparkdl.horovod.runner_base">
+<span id="sparkdl-horovod-runner-base-module"></span><h2>sparkdl.horovod.runner_base module<a class="headerlink" href="#module-sparkdl.horovod.runner_base" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="sparkdl.horovod.runner_base.HorovodRunnerBase">
+<em class="property">class </em><code class="descclassname">sparkdl.horovod.runner_base.</code><code class="descname">HorovodRunnerBase</code><span class="sig-paren">(</span><em>np</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sparkdl/horovod/runner_base.html#HorovodRunnerBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sparkdl.horovod.runner_base.HorovodRunnerBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>HorovodRunner runs distributed deep learning training jobs using Horovod.</p>
+<p>On Databricks Runtime for Machine Learning 5.0+, it launches the Horovod job as a distributed
+Spark job.  It makes running Horovod easy on Databricks by managing the cluster setup and
+integrating with Spark.  Check out Databricks documentation to view end-to-end examples and
+performance tuning tips.</p>
+<p>The open-source version only runs the job locally inside the same Python process,
+which is for local development only.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Horovod is a distributed training framework developed by Uber.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>np</strong> – <p>number of parallel processes to use for the Horovod job.
+This argument only takes effect on Databricks Runtime for Machine Learning 5.0+.
+It is ignored in the open-source version.
+Accepted values are:</p>
+<ul class="simple">
+<li>If -1, this will spawn a subprocess on the driver node to run the Horovod job locally.
+Training stdout and stderr messages go to the notebook cell output.
+This is useful for debugging and we recommend testing your code under this mode first.
+However, be careful of heavy use of the Spark driver on a shared Databricks cluster.</li>
+<li>If &gt;0, this will launch a Spark job with <cite>np</cite> tasks starting all together and run the
+Horovod job on the task nodes.
+It will wait until <cite>np</cite> task slots are available to launch the job.
+If <cite>np</cite> is greater than the total number of task slots on the cluster,
+the job will fail.
+Training stdout and stderr messages are redirected to the stderr stream of the first
+task, which you can find in the Spark UI.</li>
+<li>If 0, this will use all task slots on the cluster to launch the job.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="sparkdl.horovod.runner_base.HorovodRunnerBase.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>main</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sparkdl/horovod/runner_base.html#HorovodRunnerBase.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sparkdl.horovod.runner_base.HorovodRunnerBase.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs a Horovod training job invoking main(<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs).</p>
+<p>The open-source version only invokes main(<a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) inside the same Python process.
+On Databricks Runtime for Machine Learning 5.0+, it will launch the Horovod job based on the
+documented behavior of <cite>np</cite>.  Both the main function and the keyword arguments are
+serialized using cloudpickle and distributed to cluster workers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>main</strong> – a Python function that contains the Horovod training code.
+The expected signature is <cite>def main(**kwargs)</cite> or compatible forms.
+Because the function gets pickled and distributed to workers,
+please change global states inside the function, e.g., setting logging level,
+and be aware of pickling limitations.
+Avoid referencing large objects in the function, which might result large pickled data,
+making the job slow to start.</li>
+<li><strong>kwargs</strong> – keyword arguments passed to the main function at invocation time.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">sparkdl.horovod module</a><ul>
+<li><a class="reference internal" href="#module-sparkdl.horovod.runner_base">sparkdl.horovod.runner_base module</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/sparkdl.horovod.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+    
+        <li class="nav-item nav-item-0"><a href="index.html">pysparkdl 1.3.0 documentation</a> &#187;</li>
+ 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2016, Timothy Hunter and Joseph Bradley.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.
+    </div>
+  </body>
+</html>
