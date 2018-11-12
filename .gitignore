@@ -5,7 +5,6 @@
 *.pyc
 build/*.jar
 
-docs/_site
 docs/api
 README.org
 
