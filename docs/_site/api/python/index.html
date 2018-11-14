@@ -703,10 +703,78 @@ kerasFitParams=None)</dd>
 
 </dd></dl>
 
-<dl class="attribute">
+<dl class="class">
 <dt id="sparkdl.HorovodRunner">
-<code class="descclassname">sparkdl.</code><code class="descname">HorovodRunner</code><a class="headerlink" href="#sparkdl.HorovodRunner" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="sparkdl.horovod.html#sparkdl.horovod.runner_base.HorovodRunnerBase" title="sparkdl.horovod.runner_base.HorovodRunnerBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">sparkdl.horovod.runner_base.HorovodRunnerBase</span></code></a></p>
+<em class="property">class </em><code class="descclassname">sparkdl.</code><code class="descname">HorovodRunner</code><span class="sig-paren">(</span><em>np</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sparkdl/horovod/runner_base.html#HorovodRunner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sparkdl.HorovodRunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>HorovodRunner runs distributed deep learning training jobs using Horovod.</p>
+<p>On Databricks Runtime for Machine Learning 5.0+, it launches the Horovod job as a distributed
+Spark job.  It makes running Horovod easy on Databricks by managing the cluster setup and
+integrating with Spark.  Check out Databricks documentation to view end-to-end examples and
+performance tuning tips.</p>
+<p>The open-source version only runs the job locally inside the same Python process,
+which is for local development only.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Horovod is a distributed training framework developed by Uber.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>np</strong> – <p>number of parallel processes to use for the Horovod job.
+This argument only takes effect on Databricks Runtime for Machine Learning 5.0+.
+It is ignored in the open-source version.
+Accepted values are:</p>
+<ul class="simple">
+<li>If -1, this will spawn a subprocess on the driver node to run the Horovod job locally.
+Training stdout and stderr messages go to the notebook cell output.
+This is useful for debugging and we recommend testing your code under this mode first.
+However, be careful of heavy use of the Spark driver on a shared Databricks cluster.</li>
+<li>If &gt;0, this will launch a Spark job with <cite>np</cite> tasks starting all together and run the
+Horovod job on the task nodes.
+It will wait until <cite>np</cite> task slots are available to launch the job.
+If <cite>np</cite> is greater than the total number of task slots on the cluster,
+the job will fail.
+Training stdout and stderr messages are redirected to the stderr stream of the first
+task, which you can find in the Spark UI.</li>
+<li>If 0, this will use all task slots on the cluster to launch the job.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="sparkdl.HorovodRunner.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>main</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sparkdl/horovod/runner_base.html#HorovodRunner.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sparkdl.HorovodRunner.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs a Horovod training job invoking main(<a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs).</p>
+<p>The open-source version only invokes main(<a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) inside the same Python process.
+On Databricks Runtime for Machine Learning 5.0+, it will launch the Horovod job based on the
+documented behavior of <cite>np</cite>.  Both the main function and the keyword arguments are
+serialized using cloudpickle and distributed to cluster workers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>main</strong> – a Python function that contains the Horovod training code.
+The expected signature is <cite>def main(**kwargs)</cite> or compatible forms.
+Because the function gets pickled and distributed to workers,
+please change global states inside the function, e.g., setting logging level,
+and be aware of pickling limitations.
+Avoid referencing large objects in the function, which might result large pickled data,
+making the job slow to start.</li>
+<li><strong>kwargs</strong> – keyword arguments passed to the main function at invocation time.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>

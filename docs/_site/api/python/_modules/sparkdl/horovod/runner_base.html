@@ -65,7 +65,7 @@
 
 <span class="kn">from</span> <span class="nn">sparkdl.param</span> <span class="k">import</span> <span class="n">keyword_only</span>
 
-<div class="viewcode-block" id="HorovodRunnerBase"><a class="viewcode-back" href="../../../sparkdl.horovod.html#sparkdl.HorovodRunnerBase">[docs]</a><span class="k">class</span> <span class="nc">HorovodRunnerBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="HorovodRunner"><a class="viewcode-back" href="../../../index.html#sparkdl.HorovodRunner">[docs]</a><span class="k">class</span> <span class="nc">HorovodRunner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    HorovodRunner runs distributed deep learning training jobs using Horovod.</span>
 
@@ -105,7 +105,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_processor</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid number of processes: np = </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_processor</span><span class="p">))</span>
 
-<div class="viewcode-block" id="HorovodRunnerBase.run"><a class="viewcode-back" href="../../../sparkdl.horovod.html#sparkdl.HorovodRunnerBase.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">main</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="HorovodRunner.run"><a class="viewcode-back" href="../../../index.html#sparkdl.HorovodRunner.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">main</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Runs a Horovod training job invoking main(**kwargs).</span>
 
