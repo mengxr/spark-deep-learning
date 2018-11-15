@@ -65,21 +65,11 @@ scalacOptions in (Compile, doc) ++= Seq(
   "-implicits",
   "-skip-packages", Seq("org.apache.spark").mkString(":"))
 
-scalacOptions in (Test, doc) ++= Seq("-groups", "-implicits")
-
 // This fixes a class loader problem with scala.Tuple2 class, scala-2.11, Spark 2.x
 fork in Test := true
 
 // This and the next line fix a problem with forked run: https://github.com/scalatest/scalatest/issues/770
-javaOptions in Test ++= Seq(
-  "-Xmx2048m",
-  "-XX:ReservedCodeCacheSize=384m",
-  "-XX:MaxPermSize=384m",
-  "-Djava.awt.headless=true"
-)
-
-concurrentRestrictions in Global := Seq(
-  Tags.limitAll(1))
+// javaOptions in Test ++= Seq("-Xmx2048m")
 
 autoAPIMappings := true
 
