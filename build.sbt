@@ -4,33 +4,32 @@
 import ReleaseTransformations._
 
 val sparkVer = sys.props.getOrElse("spark.version", "2.4.0")
-val sparkBranch = sparkVer.substring(0, 3)
-val defaultScalaVer = sparkBranch match {
-  case "2.3" => "2.11.8"
+val sparkMajorVersion = sparkVer.split('.').slice(0, 2).mkString(".")
+val defaultScalaVer = sparkMajorVersion match {
   case "2.4" => "2.11.8"
   case _ => throw new IllegalArgumentException(s"Unsupported Spark version: $sparkVer.")
 }
 val scalaVer = sys.props.getOrElse("scala.version", defaultScalaVer)
-val scalaMajorVersion = scalaVer.substring(0, scalaVer.indexOf(".", scalaVer.indexOf(".") + 1))
+val scalaMajorVersion = scalaVer.split('.').slice(0, 2).mkString(".")
 
 sparkVersion := sparkVer
 
 scalaVersion := scalaVer
 
+organization := "databricks"
+
 name := "spark-deep-learning"
 
 spName := "databricks/spark-deep-learning"
 
-organization := "com.databricks"
-
-version := (version in ThisBuild).value + s"-spark$sparkBranch"
+version := (version in ThisBuild).value + s"-spark_$sparkMajorVersion-scala_$scalaMajorVersion"
 
 // All Spark Packages need a license
 licenses := Seq("Apache-2.0" -> url("http://opensource.org/licenses/Apache-2.0"))
 
 isSnapshot := version.value.contains("-SNAPSHOT")
 
-spAppendScalaVersion := true
+spAppendScalaVersion := false
 
 // Add Spark components this package depends on, e.g, "mllib", ....
 sparkComponents ++= Seq("mllib-local", "mllib", "sql")
@@ -41,7 +40,6 @@ sparkComponents ++= Seq("mllib-local", "mllib", "sql")
 // add any Spark Package dependencies using spDependencies.
 // e.g. spDependencies += "databricks/spark-avro:0.1"
 spDependencies += s"databricks/tensorframes:0.5.0-s_$scalaMajorVersion"
-
 
 libraryDependencies ++= Seq(
   // Update to scala-logging 3.9.0 after we update TensorFrames.
