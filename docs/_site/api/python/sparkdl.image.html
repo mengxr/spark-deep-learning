@@ -25,9 +25,6 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
     
         <li class="nav-item nav-item-0"><a href="index.html">pysparkdl 1.3.0 documentation</a> &#187;</li>
  
@@ -41,58 +38,8 @@
             
   <div class="section" id="sparkdl-image-module">
 <h1>sparkdl.image module<a class="headerlink" href="#sparkdl-image-module" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-sparkdl.image.imageIO">
-<span id="sparkdl-image-imageio-module"></span><h2>sparkdl.image.imageIO module<a class="headerlink" href="#module-sparkdl.image.imageIO" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="sparkdl.image.imageIO.createResizeImageUDF">
-<code class="descclassname">sparkdl.image.imageIO.</code><code class="descname">createResizeImageUDF</code><span class="sig-paren">(</span><em>size</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sparkdl/image/imageIO.html#createResizeImageUDF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sparkdl.image.imageIO.createResizeImageUDF" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a udf for resizing image.</p>
-<p>Example usage:
-dataFrame.select(resizeImage((height, width))(‘imageColumn’))</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>size</strong> – tuple, target size of new image in the form (height, width).</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">udf, a udf for resizing an image column to <cite>size</cite>.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="sparkdl.image.imageIO.PIL_decode">
-<code class="descclassname">sparkdl.image.imageIO.</code><code class="descname">PIL_decode</code><span class="sig-paren">(</span><em>raw_bytes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sparkdl/image/imageIO.html#PIL_decode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sparkdl.image.imageIO.PIL_decode" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decode a raw image bytes using PIL.
-:param raw_bytes:
-:return: image data as an array in CV_8UC3 format</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="sparkdl.image.imageIO.readImagesWithCustomFn">
-<code class="descclassname">sparkdl.image.imageIO.</code><code class="descname">readImagesWithCustomFn</code><span class="sig-paren">(</span><em>path</em>, <em>decode_f</em>, <em>numPartition=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/sparkdl/image/imageIO.html#readImagesWithCustomFn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sparkdl.image.imageIO.readImagesWithCustomFn" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read a directory of images (or a single image) into a DataFrame using a custom library to
-decode the images.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>path</strong> – str, file path.</li>
-<li><strong>decode_f</strong> – function to decode the raw bytes into an array compatible with one of the
-supported OpenCv modes. see :imageIO.PIL_decode for an example.</li>
-<li><strong>numPartition</strong> – [optional] int, number or partitions to use for reading files.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">DataFrame with schema == ImageSchema.imageSchema.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
+<div class="section" id="sparkdl-image-imageio-module">
+<h2>sparkdl.image.imageIO module<a class="headerlink" href="#sparkdl-image-imageio-module" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -105,7 +52,7 @@ supported OpenCv modes. see :imageIO.PIL_decode for an example.</li>
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">sparkdl.image module</a><ul>
-<li><a class="reference internal" href="#module-sparkdl.image.imageIO">sparkdl.image.imageIO module</a></li>
+<li><a class="reference internal" href="#sparkdl-image-imageio-module">sparkdl.image.imageIO module</a></li>
 </ul>
 </li>
 </ul>
@@ -139,9 +86,6 @@ supported OpenCv modes. see :imageIO.PIL_decode for an example.</li>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
     
         <li class="nav-item nav-item-0"><a href="index.html">pysparkdl 1.3.0 documentation</a> &#187;</li>
  
